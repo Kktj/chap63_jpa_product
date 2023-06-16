@@ -1,0 +1,80 @@
+<html layout:decorate="~{layout2}">
+    <div layout:fragment="content" class="container my-3">
+        <div>
+            <form id="empForm" name="empForm" action="/emp/register" th:action="@{/emp/register}" method="post">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" >
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber">
+                </div>
+                <div class="form-group">
+                    <label for="hireDate">Hire Date</label>
+                    <input type="date" class="form-control" id="hireDate" name="hireDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="jobId">Job ID</label>
+                    <input type="text" class="form-control" id="jobId" name="jobId">
+                </div>
+                <div class="form-group">
+                    <label for="salary">Salary</label>
+                    <input type="number" class="form-control" id="salary" name="salary" required>
+                </div>
+                <div class="form-group">
+                    <label for="commissionPct">Commission Pct</label>
+                    <input type="number" class="form-control" id="commissionPct" name="commissionPct">
+                </div>
+                <div class="form-group">
+                    <label for="managerId">Manager ID</label>
+                    <input type="number" class="form-control" id="managerId" name="managerId">
+                </div>
+
+				<div class="form-group">
+				    <label for="departmentId">departmentId (departmentId with database)</label>
+				    <select class="form-control" name="departmentId" id="departmentId">
+				        <option th:each="department : ${departmentList}" th:value="${department.departmentId}" th:text="${department.departmentName}"></option>
+				    </select>
+				</div>
+                
+                <button type="button" id="btnSubmit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</html>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('#btnSubmit').on('click', function(event) {
+    	
+        event.preventDefault();
+        
+        var firstName = $('#firstName').val();
+        var lastName = $('#lastName').val();
+        
+        if (firstName.trim() === '') {
+            alert('First name을 입력하세요.');
+            return;
+        }
+        
+        if (lastName.trim() === '') {
+            alert('Last name을 입력하세요.');
+            return;
+        }
+        
+        // submit
+        $('#empForm').submit();
+    });
+});
+</script>

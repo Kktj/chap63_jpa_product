@@ -1,0 +1,70 @@
+<html layout:decorate="~{layout2}">
+<div layout:fragment="content" class="container my-3">
+	<div>
+	    <table class="table">
+	        <thead class="table-dark">
+	            <tr>
+	                <th>ID</th>
+	                <th>Name</th>
+	                <th>Email</th>
+	                <th>Phone Number</th>
+	                <th>Hire Date</th>
+	                <th>Job Title</th>
+	                <th>Salary</th>
+	                <th>Commission Pct</th>
+	                <th>Manager Name</th>
+	                <th>Department Name</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr th:each="employee : ${list}">
+	                <td>
+	                    <a th:href="@{/emp/read(employeeId=${employee.employeeId})}">
+	                        <span th:text="${employee.employeeId}"></span>
+	                    </a>
+	                </td>
+	                <td><span th:text="${employee.firstName} + ' ' + ${employee.lastName}"></span></td>
+	                <td><span th:text="${employee.email}"></span></td>
+	                <td><span th:text="${employee.phoneNumber}"></span></td>
+	                <td><span th:text="${employee.hireDate}"></span></td>
+	                <td><span th:text="${employee.jobTitle}"></span></td>
+	                <td><span th:text="${employee.salary}"></span></td>
+	                <td><span th:text="${employee.commissionPct}"></span></td>
+	                <td><span th:text="${employee.managerName}"></span></td>
+	                <td><span th:text="${employee.departmentName}"></span></td>
+	            </tr>
+	        </tbody>
+	    </table>
+	</div>
+
+	<div class="text-left mt-3">
+	    <a class="btn btn-success" th:href="@{/emp/register}">사원등록</a>
+	</div>
+
+	<!-- 페이징처리 시작 -->
+    <div th:if="${pageMaker.startPage > 0}">
+        <ul class="pagination justify-content-center">
+        	<!-- 이전 -->
+            <li class="page-item" th:classappend="${!pageMaker.prev} ? 'disabled'">
+                <a class="page-link" th:href="@{|?pageNum=${pageMaker.cri.pageNum-1}|}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <!-- 페이지번호 -->
+            <li th:each="page: ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}" 
+                th:classappend="${page == pageMaker.cri.pageNum} ? 'active'" 
+                class="page-item">
+                <a th:text="${page}" class="page-link" th:href="@{|?pageNum=${page}|}"></a>
+            </li>
+            <!-- 다음 -->
+            <li class="page-item" th:classappend="${!pageMaker.next} ? 'disabled'">
+                <a class="page-link" th:href="@{|?pageNum=${pageMaker.cri.pageNum+1}|}">
+                    <span>다음</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- 페이징처리 끝 -->	
+	</div>
+</div>
+</html>
